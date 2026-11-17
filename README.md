@@ -148,7 +148,11 @@ The following analyses are conducted:
 - Missing-value analysis.
 - Gene variance analysis.
 
-A bar chart is used to visualize the distribution of cancer and normal samples. A boxplot is used to explore gene expression distributions.
+A bar chart is used to visualize the distribution of cancer and normal samples.
+<img width="425" height="510" alt="Sample_distribution" src="https://github.com/user-attachments/assets/c9774b3a-5f9a-40a3-8ef4-694835553e8a" />
+
+A boxplot is used to explore gene expression distributions.
+<img width="425" height="510" alt="Gene_expression_distribution" src="https://github.com/user-attachments/assets/1fd823dd-bef6-43fa-8347-888d51e66070" />
 
 ### 4.5 Principal Component Analysis
 
@@ -157,6 +161,9 @@ Principal Component Analysis (PCA) is applied to explore patterns and similariti
 The PCA technique transforms high-dimensional gene expression measurements into a smaller number of principal components.
 
 The first two principal components are visualized using a scatter plot to investigate whether cancer and normal samples show different expression patterns.
+
+<img width="425" height="510" alt="Rplot" src="https://github.com/user-attachments/assets/fbc266b0-aee7-42c0-ac33-4dfa022ad624" />
+
 
 ### 4.6 Differential Gene Expression Analysis
 
@@ -186,6 +193,9 @@ The x-axis represents log fold change, while the y-axis represents the negative 
 
 Significant and non-significant genes are distinguished using different colors.
 
+<img width="863" height="516" alt="volcano_plot" src="https://github.com/user-attachments/assets/b332c918-313f-43ef-9b24-5b99d96bd97b" />
+
+
 ### 4.8 Hierarchical Clustering and Heatmap
 
 Gene expression variance is calculated to identify highly variable genes.
@@ -196,6 +206,9 @@ The pheatmap package is used to generate a heatmap with row scaling and sample g
 
 This visualization helps explore gene expression patterns and clustering relationships among samples.
 
+<img width="863" height="516" alt="BreastCancer_heatmap" src="https://github.com/user-attachments/assets/5bb9230d-f3da-48c4-be78-ec17241d10d4" />
+
+
 ## 5. Results
 
 The following visualizations and statistical outputs are generated through the analysis.
@@ -204,7 +217,7 @@ The following visualizations and statistical outputs are generated through the a
 
 **Figure 1: Distribution of Cancer and Normal Samples**
 
-![Sample Distribution](results/figures/sample_distribution.png)
+<img width="425" height="510" alt="Sample_distribution" src="https://github.com/user-attachments/assets/6fe3b82c-5581-4f64-9f95-dcac219e8876" />
 
 This bar chart illustrates the number of samples belonging to each group.
 
@@ -212,7 +225,8 @@ This bar chart illustrates the number of samples belonging to each group.
 
 **Figure 2: Gene Expression Distribution**
 
-![Gene Expression Distribution](results/figures/gene_expression_boxplot.png)
+<img width="425" height="510" alt="Gene_expression_distribution" src="https://github.com/user-attachments/assets/1db18ff2-7c5d-4e5b-9e01-6239bf24fb0f" />
+
 
 The boxplot illustrates the distribution of gene expression measurements across the first ten samples.
 
@@ -220,7 +234,8 @@ The boxplot illustrates the distribution of gene expression measurements across 
 
 **Figure 3: PCA of Breast Cancer Samples**
 
-![PCA Plot](results/figures/pca_plot.png)
+<img width="425" height="510" alt="Rplot" src="https://github.com/user-attachments/assets/89e28d7f-6d2a-4d1a-84ce-d67928375200" />
+
 
 The PCA plot visualizes sample relationships based on the first two principal components.
 
@@ -243,7 +258,8 @@ The significant gene results are saved in:
 
 **Figure 4: Volcano Plot of Differentially Expressed Genes**
 
-![Volcano Plot](results/figures/volcano_plot.png)
+<img width="863" height="516" alt="volcano_plot" src="https://github.com/user-attachments/assets/caf83d64-3ba7-49fa-b8c3-3a63e4880b2e" />
+
 
 The volcano plot illustrates the relationship between gene expression changes and statistical significance.
 
@@ -251,7 +267,8 @@ The volcano plot illustrates the relationship between gene expression changes an
 
 **Figure 5: Heatmap of the Top 30 Highly Variable Genes**
 
-![Gene Expression Heatmap](results/figures/gene_expression_heatmap.png)
+<img width="863" height="516" alt="BreastCancer_heatmap" src="https://github.com/user-attachments/assets/de4d509c-e733-417c-a7e6-2d61c1fdac08" />
+
 
 The heatmap displays the expression patterns of the top 30 highly variable genes across cancer and normal samples.
 
@@ -410,14 +427,4 @@ For reproducibility, record the versions used when performing the final analysis
 
 3. Davis, S., & Meltzer, P. S. (2007). GEOquery: A bridge between the Gene Expression Omnibus (GEO) and BioConductor. *Bioinformatics, 23*(14), 1846–1847. https://doi.org/10.1093/bioinformatics/btm254
 
-4. Wickham, H. (2016). *ggplot2: Elegant Graphics for Data Analysis*. Springer. https://doi.org/10.1007/978-3-319-24277-4
-
-5. Kolde, R. (2019). *pheatmap: Pretty Heatmaps*. R package. https://CRAN.R-project.org/package=pheatmap
-
-6. R Core Team. *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing. https://www.R-project.org/
-
-7. National Center for Biotechnology Information. *Gene Expression Omnibus: GSE42568*. https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE42568
-
 ---
-
-**Project developed for academic bioinformatics research and learning purposes.**
