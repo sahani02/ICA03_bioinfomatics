@@ -360,6 +360,11 @@ Breast-Cancer-Bioinformatics/
 │
 ├── results/
 │   ├── figures/
+|   |   └── Sample_distribution.png
+|   |   └── Gene_expression_distribution.png
+|   |   └── Rplot.png
+|   |   └── volcano_plot.png
+|   |   └── BreastCancer_heatmap.png
 │   └── tables/
 │       └── significant_genes.csv
 │
