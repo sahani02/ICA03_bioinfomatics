@@ -149,10 +149,18 @@ The following analyses are conducted:
 - Gene variance analysis.
 
 A bar chart is used to visualize the distribution of cancer and normal samples.
+
+
 <img width="425" height="510" alt="Sample_distribution" src="https://github.com/user-attachments/assets/c9774b3a-5f9a-40a3-8ef4-694835553e8a" />
 
+
+
 A boxplot is used to explore gene expression distributions.
+
+
 <img width="425" height="510" alt="Gene_expression_distribution" src="https://github.com/user-attachments/assets/1fd823dd-bef6-43fa-8347-888d51e66070" />
+
+
 
 ### 4.5 Principal Component Analysis
 
