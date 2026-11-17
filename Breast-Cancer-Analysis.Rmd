@@ -1,0 +1,183 @@
+---
+title: "Breast Cancer Bioinformatics Analysis"
+author: "S.H.Maddumage"
+date: "2026-11-17"
+output: html_document
+---
+
+# 1. Introduction
+
+This project analyzes breast cancer gene expression data
+using the GSE42568 dataset from the NCBI GEO database.
+
+The main objective is to identify differentially expressed
+genes between breast cancer and normal tissue samples.
+
+# 2. Required Libraries
+
+```{r setup, message=FALSE, warning=FALSE}
+library(GEOquery)
+library(limma)
+library(ggplot2)
+library(tidyverse)
+library(pheatmap)
+```
+
+# 3. Data Collection
+
+```{r}
+download.file(
+  "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE42nnn/GSE42568/matrix/GSE42568_series_matrix.txt.gz",
+  destfile = "data/GSE42568_series_matrix.txt.gz",
+  mode = "wb",
+  method = "libcurl"
+)
+```
+
+# 4. Data Loading
+
+```{r}
+gse <- getGEO(
+  filename = "data/GSE42568_series_matrix.txt.gz"
+)
+
+expression_data <- exprs(gse)
+metadata <- pData(gse)
+
+dim(expression_data)
+head(metadata$title)
+```
+
+# 5. Sample Classification
+
+```{r}
+sample_titles <- metadata$title
+
+group <- ifelse(
+  grepl("normal", sample_titles, ignore.case = TRUE),
+  "Normal",
+  "Cancer"
+)
+
+group <- factor(group)
+
+table(group)
+```
+
+# 6. Exploratory Data Analysis
+
+```{r}
+ggplot(data.frame(Group = group),
+       aes(x = Group, fill = Group)) +
+  geom_bar() +
+  labs(title = "Distribution of Samples") +
+  theme_minimal()
+```
+
+# 7. Principal Component Analysis
+
+```{r}
+gene_variance <- apply(expression_data, 1, var,
+                       na.rm = TRUE)
+
+nonzero_genes <- gene_variance > 0 &
+  !is.na(gene_variance)
+
+expression_filtered <- expression_data[nonzero_genes, ]
+
+pca <- prcomp(t(expression_filtered), scale. = TRUE)
+
+pca_data <- data.frame(
+  PC1 = pca$x[,1],
+  PC2 = pca$x[,2],
+  Group = group
+)
+
+ggplot(pca_data, aes(PC1, PC2, color = Group)) +
+  geom_point(size = 3) +
+  labs(title = "PCA of Breast Cancer Samples") +
+  theme_minimal()
+```
+
+# 8. Differential Gene Expression Analysis
+
+```{r}
+design <- model.matrix(~0 + group)
+colnames(design) <- levels(group)
+
+fit_model <- lmFit(expression_data, design)
+
+contrast <- makeContrasts(
+  Cancer - Normal,
+  levels = design
+)
+
+fit2 <- contrasts.fit(fit_model, contrast)
+fit2 <- eBayes(fit2)
+
+results <- topTable(
+  fit2,
+  number = Inf,
+  adjust.method = "BH"
+)
+
+head(results)
+```
+
+# 9. Significant Genes
+
+```{r}
+significant_genes <- results %>%
+  filter(adj.P.Val < 0.05, abs(logFC) > 1)
+
+nrow(significant_genes)
+head(significant_genes)
+```
+
+# 10. Volcano Plot
+
+```{r}
+results$Significance <- ifelse(
+  results$adj.P.Val < 0.05 &
+    abs(results$logFC) > 1,
+  "Significant",
+  "Not Significant"
+)
+
+ggplot(results,
+       aes(logFC, -log10(adj.P.Val),
+           color = Significance)) +
+  geom_point(alpha = 0.6) +
+  labs(title = "Volcano Plot of Differentially Expressed Genes") +
+  theme_minimal()
+```
+
+# 11. Heatmap
+
+```{r}
+gene_variance <- apply(expression_data, 1, var,
+                       na.rm = TRUE)
+
+top_genes <- names(
+  sort(gene_variance, decreasing = TRUE)
+)[1:30]
+
+heatmap_data <- expression_data[top_genes, ]
+
+annotation <- data.frame(Group = group)
+rownames(annotation) <- colnames(heatmap_data)
+
+pheatmap(
+  heatmap_data,
+  scale = "row",
+  annotation_col = annotation,
+  show_rownames = FALSE,
+  main = "Breast Cancer Gene Expression Heatmap"
+)
+```
+
+# 12. Conclusion
+
+This analysis explores breast cancer gene expression
+patterns and identifies differentially expressed genes
+between cancer and normal tissue samples.
